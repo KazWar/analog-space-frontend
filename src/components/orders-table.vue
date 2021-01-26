@@ -2,11 +2,6 @@
 import { date } from 'quasar'
 import { mapState, mapActions, mapGetters } from 'vuex'
 import orderDialog from './orders-table-components/order-dialog'
-import {
-  OrderStatusNames,
-  OrderSubStatusNames,
-  OrderTypeNames
-} from 'src/model/order'
 
 export default {
   name: 'ordersTable',
@@ -16,12 +11,8 @@ export default {
       'newOrder',
       'editCustomer',
       'newCustomer',
-      'editItem',
       'newItem',
-      'editOrderItem',
       'newOrderItem',
-      'loadOrderItem',
-      'loadItem'
     ]),
 
     async newOrderDialog() {
@@ -35,7 +26,6 @@ export default {
         .dialog({
           component: orderDialog,
           parent: this,
-          text: 'something'
         })
         .onOk(() => {
           console.log('OK')
@@ -48,6 +38,7 @@ export default {
         })
     },
     async editOrderDialog(evt, row) {
+      // Gets existing objects from the store
       await this.editOrder(row.id)
       await this.editCustomer(row.customerId)
 
@@ -159,18 +150,6 @@ export default {
       @row-click="editOrderDialog"
     >
       <template v-slot:top>
-        <!--        <q-tabs>
-          <q-tab
-            name="newOrders"
-            :filter="filter"
-            icon="keyboard_tab"
-            label="New"
-          />
-          <q-tab name="inProgressOrders" icon="autorenew" label="In progress" />
-          <q-tab name="delayedOrders" icon="more_time" label="delayed" />
-          <q-tab name="finishedOrders" icon="done" label="Finished" />
-          <q-tab name="allOrders" icon="movie" label="All" />
-        </q-tabs>-->
         <q-btn
           class="newOrderButton"
           align="right"
